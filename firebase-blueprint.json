@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "Room": {
+      "title": "Room",
+      "description": "A shared workspace identified by a URL path.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastActivity": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id"]
+    },
+    "FeedItem": {
+      "title": "Feed Item",
+      "description": "An item in the room's feed, either text or a file.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["text", "file"] },
+        "content": { "type": "string", "description": "The text content or file URL." },
+        "fileName": { "type": "string" },
+        "fileType": { "type": "string" },
+        "fileSize": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "authorId": { "type": "string" }
+      },
+      "required": ["type", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Room metadata."
+    },
+    "/rooms/{roomId}/feed/{itemId}": {
+      "schema": "FeedItem",
+      "description": "Items in the room's feed."
+    }
+  }
+}
